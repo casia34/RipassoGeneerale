@@ -53,7 +53,9 @@ namespace RipassoGeneerale
                 try
                 {
                     Example AllPepole = serializer.Deserialize<Example>(jsonReader);
+
                     ConvertJson(AllPepole);
+
                     string JSONresult = JsonConvert.SerializeObject(AllPepole.results);
 
                     StarWarsDS starWarsDSDB = new StarWarsDS();
@@ -85,31 +87,88 @@ namespace RipassoGeneerale
 
         async static void ConvertJson(Example Persone)
         {
+          
+
             XmlDocument xmlDocument = new XmlDocument();
-
-            XmlElement xmlElements = xmlDocument.CreateElement(null, "Persone_Di_StarWars", null);
-
             XmlDeclaration Declaration = xmlDocument.CreateXmlDeclaration("1.1", "utf-8", null);
-
             xmlDocument.AppendChild(Declaration);
-
+            XmlElement xmlElements = xmlDocument.CreateElement(null, "Persone_Di_StarWars", null);
             xmlDocument.AppendChild(xmlElements);
-
             XmlElement xmlElement;
+            XmlElement ListaCaratterisctichePG = xmlDocument.CreateElement(null, "Personaggio", null);
+           
             XmlText xmlText;
 
             foreach (Result Persona in Persone.results)
             {
-                xmlElement = xmlDocument.CreateElement(null, "name", null);
-                xmlText = xmlDocument.CreateTextNode(Persona.name);
-                xmlElement.AppendChild(xmlText);
-                xmlElements.AppendChild(xmlElement);
-                xmlElement = xmlDocument.CreateElement(null, "gender", null);
-                xmlText = xmlDocument.CreateTextNode(Persona.gender);
-                xmlElement.AppendChild(xmlText);
-                xmlElements.AppendChild(xmlElement);
-            }
 
+
+                xmlElement = xmlDocument.CreateElement(null, "hair_color", null);
+
+                xmlText = xmlDocument.CreateTextNode(Persona.hair_color.Replace(" ", "_"));
+
+                xmlElement.AppendChild(xmlText);
+
+                ListaCaratterisctichePG.AppendChild(xmlElement);
+
+
+
+                xmlElement = xmlDocument.CreateElement(null, "height", null);
+
+                xmlText = xmlDocument.CreateTextNode(Persona.height.Replace(" ", "_"));
+
+
+                xmlElement.AppendChild(xmlText);
+
+                ListaCaratterisctichePG.AppendChild(xmlElement);
+
+
+
+
+                xmlElement = xmlDocument.CreateElement(null, "mass", null);
+
+                xmlText = xmlDocument.CreateTextNode(Persona.mass.Replace(" ", "_"));
+
+                xmlElement.AppendChild(xmlText);
+
+                ListaCaratterisctichePG.AppendChild(xmlElement);
+
+
+
+                xmlElement = xmlDocument.CreateElement(null, "skin_color", null);
+
+                xmlText = xmlDocument.CreateTextNode(Persona.skin_color.Replace(" ", "_"));
+
+                xmlElement.AppendChild(xmlText);
+
+                ListaCaratterisctichePG.AppendChild(xmlElement);
+
+
+
+
+
+                xmlElement = xmlDocument.CreateElement(null, "name", null);
+
+                xmlText = xmlDocument.CreateTextNode(Persona.name.Replace(" ","_"));
+
+                xmlElement.AppendChild(xmlText);
+
+                ListaCaratterisctichePG.AppendChild(xmlElement);
+
+
+                xmlElement = xmlDocument.CreateElement(null, "gender", null);
+
+                xmlText = xmlDocument.CreateTextNode(Persona.gender);
+
+                xmlElement.AppendChild(xmlText);
+
+                ListaCaratterisctichePG.AppendChild(xmlElement);
+
+
+                ListaCaratterisctichePG = xmlDocument.CreateElement(null, "Personaggio", null);
+
+                xmlElements.AppendChild(ListaCaratterisctichePG);
+            }
 
             xmlDocument.Save(@"C:\Users\leoci\Desktop\Giochi\FileProva\Test.xml");
         }
